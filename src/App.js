@@ -56,7 +56,7 @@ function App() {
   );
 }
 
-//component제작법 1. funtion컴포넌트이름(){} 2.return(<div></div)
+// component제작법 1. funtion컴포넌트이름(){} 2.return(<div></div)
 function Card(props){
   return (
     <div className="col-md-4"> {/**md : 모바일에선 새로로 정렬*/}
