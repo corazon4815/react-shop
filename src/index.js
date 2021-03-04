@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
+//</HashRouter> -> 라우팅을 안전하게 할수있게 도와줌(서버에 전송되지않고 페이지가 바뀜)
+//BrowserRouter는 서버와 협업해서 보여줌 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

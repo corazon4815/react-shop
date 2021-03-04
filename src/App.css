@@ -8,6 +8,13 @@
   color:white;
 }
 
+.link {
+  color: rgb(201, 197, 197);
+}
+.link:hover {
+   color: rgb(81, 81, 82)
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
