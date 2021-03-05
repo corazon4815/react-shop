@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Navbar,Nav,NavDropdown,Form,FormControl,Button,Jumbotron} from 'react-bootstrap';
+import { Navbar,Nav,NavDropdown,Button,Jumbotron} from 'react-bootstrap';
 import './App.css';
 import Data from './data.js' //    ./ 가 현재 경로라는 뜻임 
 import Detail from './Detail.js'
@@ -17,8 +17,8 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="#home"><Link className="link" to="/">Home</Link></Nav.Link>
-            <Nav.Link href="#link"><Link className="link" to="/Detail">Detail</Link></Nav.Link>
+            <Nav.Link className="link" as={Link} to="/">Home</Nav.Link>
+            <Nav.Link className="link" as={Link} to="/Detail">Detail</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -60,9 +60,9 @@ function App() {
       </Route>
       
       
-      <Route path="/detail">
-        <div>디테일페이지</div>
-        <Detail />
+      <Route path="/detail/:id">
+        <div>DETAIL</div>
+        <Detail shoes={shoes}/>
       </Route>
 
       <Route path="/:id"> 
