@@ -15,20 +15,21 @@ function Detail(props){
   //3. useEffect() : componentDidMount와 같음 (첫등장해서 로딩이 끝난후 = mount가 끝났을때)
                                             //(컴포넌트가 재랜더링되고난 후 때 = update되고 난 후)
 
-    //useEffect : 맨처음 Detail이 로드될때만 실행하고 싶으면 []를 넣어주면됨
+    //useEffect : **** 맨처음 Detail이 로드될때만 실행하고 싶으면 []를 넣어주면됨
+                            //특정 state가 변경될때만 실행해주세요->느낌
     //setTimeout : 타이머가 만료된 후 지정된 코드를 실행함
     useEffect(()=>{
     let 타이머 = setTimeout(()=>{ alert변경(false) }, 2000);  
     return ()=>{clearTimeout(타이머)}
     //setTimeout가 끝나지않았는데 페이지가 바뀌면 버그가 날수도있기때문에 
     //return(=componentWillUnmount)으로 컴포넌트가
-    //종료되기전에 뭘 실행할지 적어주면 좋다 
+    //종료되기전에 뭘 실행할지 적음 
   },[]);
   
   let { id } = useParams(); //  /:id자리에 사용자가 입력한 값이 저장됨
   let history = useHistory();
   let [alert, alert변경] = useState(true);
-  let [inputData, inputData변경] =useState('');
+  let [inputData, inputData변경] = useState('');
 
 
     return (
@@ -36,7 +37,7 @@ function Detail(props){
         {/* <박스></박스> */}
 
         {/* { inputData } 리액트에선 input에 값을 입력할때마다 Detail이 재 랜더링(컴포넌트)업데이트됨 */}
-        <input onChange={(e)=>{inputData변경(e.target.value) }} />
+        {/* <input onChange={(e)=>{inputData변경(e.target.value) }} /> */}
 
         {
           alert === true
