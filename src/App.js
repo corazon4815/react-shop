@@ -9,6 +9,8 @@ import axios from 'axios';
 function App() {
 
   let [shoes, shoes변경] = useState(Data);
+  let [alert, alert변경] = useState(false);
+  let [재고, 재고변경] = useState([10,11,12]);
 
 
   return (
@@ -47,6 +49,14 @@ function App() {
               <Button variant="light">Learn more</Button>
             </p>
         </Jumbotron>
+        
+        {
+          alert === true
+          ? (<div className="my-alert2">
+              <Modal/> 
+            </div>)
+          : null    
+        }
 
         <div className="container">
           <div className="row">
@@ -60,12 +70,24 @@ function App() {
           {/* then 성공했을때
           catch 실패했을때 */}
           <button className="btn btn-primary" onClick={()=>{
+            alert변경(true);
+            //로딩중이라는 ui
+
+            //post 요청 
+            //axios.post('https://codingapple1.github.io/shop/data2.json', { id : 'test', pw : 1234})
+            //.then((result)=>{  })
+            //.catch(()=>{ })
+
             axios.get('https://codingapple1.github.io/shop/data2.json') // object가 아닌 json형식임(키값에 ""가 있음) 
-            .then((result)=>{                                           //하지만 axios는 오브젝트로 변환시켜서 가져옴
+            .then((result)=>{
+              alert변경(false);                                           //하지만 axios는 오브젝트로 변환시켜서 가져옴
+            //로딩중이라는 ui 안보이게 
               console.log(result.data);                                  //쌩자바스크립트 fetch는 안그렇기때문에 작업이 필요함
-              shoes변경([...shoes, result.data]);
+              shoes변경([...shoes, ...result.data]);
             })
             .catch(()=>{
+              alert변경(false);
+              //로딩중이라는 ui 안보이게 
               console.log('실패 했어요')
             })
           }}>더보기</button>
@@ -75,7 +97,7 @@ function App() {
       
       <Route path="/detail/:id">
         <div>DETAIL</div>
-        <Detail shoes={shoes}/>
+        <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
       </Route>
 
       <Route path="/:id"> 
@@ -99,7 +121,15 @@ function Card(props){
     <div className="col-md-4"> {/**md : 모바일에선 새로로 정렬*/}
         <img src={ 'https://codingapple1.github.io/shop/shoes'+(props.i+1)+'.jpg' } width="100%" />
         <h4>{props.shoes.title}</h4>
-        <p>{props.shoes.content} {props.shoes.price}</p>
+        <p>{props.shoes.content} & {props.shoes.price}</p>
+    </div>
+  )
+}
+
+function Modal(){
+  return (
+    <div>
+      <p>상품을 로딩중입니다.</p>
     </div>
   )
 }

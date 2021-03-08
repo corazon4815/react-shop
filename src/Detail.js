@@ -55,7 +55,15 @@ function Detail(props){
             <h4 className="pt-5">{props.shoes[id-1].title}</h4>
             <p>{props.shoes[id-1].content}</p>
             <p>{props.shoes[id-1].price}W</p>
-            <button className="btn btn-secondary">주문하기</button>&nbsp;&nbsp;&nbsp;
+            
+            <Info 재고={props.재고}/> 
+            {/* 자식의 자식에게 props전송하는법 */}
+
+            <button className="btn btn-secondary" onClick={()=>{
+              //주문클릭시 재고 빼기
+              props.재고변경([9,10,11])
+
+            }}>주문하기</button>&nbsp;&nbsp;&nbsp;
             <button className="btn btn-info" onClick={()=>{
               history.push('/')
             }}>뒤로가기</button>
@@ -64,6 +72,12 @@ function Detail(props){
         </div>
       </div> 
     )
+}
+
+function Info(props){
+  return (
+    <p> 재고 : {props.재고[0]} </p>
+  )
 }
 
 export default Detail;
