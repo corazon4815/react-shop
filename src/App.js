@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { Navbar,Nav,NavDropdown,Button,Jumbotron} from 'react-bootstrap';
 import './App.css';
 import Data from './data.js' //    ./ 가 현재 경로라는 뜻임 
 import Detail from './Detail.js'
 import { Link, Route, Switch } from 'react-router-dom'
 import axios from 'axios';
+export let 재고context = React.createContext();
+
+//let 재고context = React.createContext();
 
 function App() {
 
@@ -21,7 +24,7 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link className="link" as={Link} to="/">Home</Nav.Link>
-            <Nav.Link className="link" as={Link} to="/Detail">Detail</Nav.Link>
+            <Nav.Link className="link" as={Link} to="/Detail/1">Detail</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -59,6 +62,10 @@ function App() {
         }
 
         <div className="container">
+          
+          <재고context.Provider value={재고}> 
+                                {/* 공유하고싶은 데이터 */}
+
           <div className="row">
             {
               shoes.map((a,i)=>{
@@ -67,6 +74,9 @@ function App() {
               })
             }
           </div>
+
+          </재고context.Provider>
+
           {/* then 성공했을때
           catch 실패했을때 */}
           <button className="btn btn-primary" onClick={()=>{
@@ -96,14 +106,16 @@ function App() {
       
       
       <Route path="/detail/:id">
-        <div>DETAIL</div>
-        <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+        <재고context.Provider value={재고}>
+          <div>DETAIL</div>
+          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+        </재고context.Provider>
       </Route>
 
-      <Route path="/:id"> 
+      {/* <Route path="/:id">  */}
       {/* /:id ->모든문자열을 뜻함 */}
-        <div>/슬러시뒤에 문자열이 있으면 이거보여줘</div>
-      </Route>
+        {/* <div>/슬러시뒤에 문자열이 있으면 이거보여줘</div>
+      </Route> */}
 
     </Switch>        
       
@@ -117,12 +129,17 @@ function App() {
 
 // component제작법 1. funtion컴포넌트이름(){} 2.return(<div></div)
 function Card(props){
+  let 재고 = useContext(재고context);
+                        //범위를 넣어줌
+  
   return (
     <div className="col-md-4"> {/**md : 모바일에선 새로로 정렬*/}
         <img src={ 'https://codingapple1.github.io/shop/shoes'+(props.i+1)+'.jpg' } width="100%" />
         <h4>{props.shoes.title}</h4>
         <p>{props.shoes.content} & {props.shoes.price}</p>
+        <Test></Test>
     </div>
+    
   )
 }
 
@@ -132,6 +149,12 @@ function Modal(){
       <p>상품을 로딩중입니다.</p>
     </div>
   )
+}
+
+function Test(){ //props없이 공유하기 =>useContext 
+  let 재고 = useContext(재고context)
+  return <p>{재고}</p>
+
 }
 
 export default App;

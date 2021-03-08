@@ -1,8 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useHistory, useParams } from 'react-router-dom';
+import { Navbar,Nav,NavDropdown,Button,Jumbotron} from 'react-bootstrap';
 //import styled from 'styled-conponents';
                     //css를 미리 입혀놓은 컴포넌트 근데 설치해도 없다고나와서 주석처리함
 import './Detail.scss';
+import {재고context} from './App.js';
+import {CSSTransition} from "react-transition-group";
 
 //  let 박스 = styled.div`
 //    padding : 20px;
@@ -30,6 +33,9 @@ function Detail(props){
   let history = useHistory();
   let [alert, alert변경] = useState(true);
   let [inputData, inputData변경] = useState('');
+  let 재고 = useContext(재고context); //범위를 App.js에 만들었기때문에 export하고 import해야함
+  let [누른탭, 누른탭변경] = useState(0);
+  let [스위치, 스위치변경] = useState(false);
 
 
     return (
@@ -70,8 +76,38 @@ function Detail(props){
 
           </div>
         </div>
+
+        <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
+          <Nav.Item>
+            <Nav.Link eventKey="link-0" onClick={()=>{스위치변경(false); 누른탭변경(0)}} >상품설명</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link-1" onClick={()=>{스위치변경(false); 누른탭변경(1)}} >배송정보</Nav.Link>
+          </Nav.Item>
+        </Nav>
+
+        {/* 탭을 부드럽게 변환시키기 true일때만 에니메이션동작함*/}
+        <CSSTransition in={스위치} classNames="wow" timeout={500}> 
+          <TapContent 누른탭 = {누른탭} 스위치변경 = {스위치변경}/>  
+        </CSSTransition> 
+
       </div> 
     )
+}
+
+function TapContent(props){
+
+  useEffect(()=>{
+    props.스위치변경(true);
+  });
+
+  if(props.누른탭 === 0) {
+    return <div>0번째 내용입니다</div>
+  } else if (props.누른탭 === 1){
+    return <div>1번째 내용입니다</div>
+  } else if (props.누른탭 ===2 ){
+    return <div>2번째 내용입니다</div>
+  }
 }
 
 function Info(props){
