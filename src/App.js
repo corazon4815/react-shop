@@ -5,8 +5,9 @@ import Data from './data.js' //    ./ 가 현재 경로라는 뜻임
 import Detail from './Detail.js'
 import { Link, Route, Switch } from 'react-router-dom'
 import axios from 'axios';
-export let 재고context = React.createContext();
 
+import Cart from './Cart.js';
+export let 재고context = React.createContext();
 //let 재고context = React.createContext();
 
 function App() {
@@ -110,6 +111,16 @@ function App() {
           <div>DETAIL</div>
           <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
         </재고context.Provider>
+      </Route>
+
+      {/* 
+      1. Cart.js만들기 (export default)
+      2. 부트스트랩 table 넣기(import)
+      3. App.js에 (import) 하고 Route 추가 
+      4. 
+      */}
+      <Route path="/cart">
+        <Cart></Cart>
       </Route>
 
       {/* <Route path="/:id">  */}
