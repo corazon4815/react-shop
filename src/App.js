@@ -3,7 +3,7 @@ import { Navbar,Nav,NavDropdown,Button,Jumbotron} from 'react-bootstrap';
 import './App.css';
 import Data from './data.js' //    ./ 가 현재 경로라는 뜻임 
 import Detail from './Detail.js'
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Route, Switch, useHistory } from 'react-router-dom'
 import axios from 'axios';
 
 import Cart from './Cart.js';
@@ -26,6 +26,7 @@ function App() {
           <Nav className="ml-auto">
             <Nav.Link className="link" as={Link} to="/">Home</Nav.Link>
             <Nav.Link className="link" as={Link} to="/Detail/1">Detail</Nav.Link>
+            <Nav.Link className="link" as={Link} to="/cart">Cart</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -142,9 +143,10 @@ function App() {
 function Card(props){
   let 재고 = useContext(재고context);
                         //범위를 넣어줌
+  let history = useHistory();
   
   return (
-    <div className="col-md-4"> {/**md : 모바일에선 새로로 정렬*/}
+    <div className="col-md-4" onClick={()=>{ history.push('/detail/'+(props.shoes.id+1)) }}> {/**md : 모바일에선 새로로 정렬*/}
         <img src={ 'https://codingapple1.github.io/shop/shoes'+(props.i+1)+'.jpg' } width="100%" />
         <h4>{props.shoes.title}</h4>
         <p>{props.shoes.content} & {props.shoes.price}</p>

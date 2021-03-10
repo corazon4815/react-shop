@@ -6,6 +6,7 @@ import { Navbar,Nav,NavDropdown,Button,Jumbotron} from 'react-bootstrap';
 import './Detail.scss';
 import {재고context} from './App.js';
 import {CSSTransition} from "react-transition-group";
+import { connect } from 'react-redux';
 
 //  let 박스 = styled.div`
 //    padding : 20px;
@@ -68,6 +69,8 @@ function Detail(props){
             <button className="btn btn-secondary" onClick={()=>{
               //주문클릭시 재고 빼기
               props.재고변경([9,10,11])
+              props.dispatch({type : '항목추가', payload : {id: id, name : props.shoes[id-1].title , quan:1}});
+              history.push('/cart')
 
             }}>주문하기</button>&nbsp;&nbsp;&nbsp;
             <button className="btn btn-info" onClick={()=>{
@@ -116,4 +119,15 @@ function Info(props){
   )
 }
 
-export default Detail;
+function state를props화(state){
+  console.log(state)
+  return {
+    state : state.reducer, //stete안에 있는 모든 데이터를 state라는 이름의 props로 바꿔주세용
+                           //이러면 state라고 쓰는 순간 안의 모든 데이터가 출력이 됨
+    alert열렸니 : state.reducer2            }
+}
+
+export default connect(state를props화)(Detail)
+
+
+//export default Detail;
